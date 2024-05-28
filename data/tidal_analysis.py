@@ -54,8 +54,8 @@ def read_tidal_data(filename):
         raise FileNotFoundError(f"The file {filename} does not exist")
 
 
-#somedata = read_tidal_data('1947ABE.txt')
-#print(somedata)
+    #somedata = read_tidal_data('1947ABE.txt')
+    #print(somedata)
 
 def extract_section_remove_mean(start, end, data):
 
