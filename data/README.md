@@ -37,13 +37,13 @@ pytest test/test_tides.py::TestRegression
 
 There are three directories with data for Whitby, Aberdeen and Dover for the years
 2000 to 2019. Your code must be able to read in all the data files in one of those
-directories and perform the analysis. You should be able to run:
+directories and perform the analysis by the user suppying the folder. You should be able to run:
 
 ```bash
 python3 tidal_analysis.py data/whitby
 ```
 
-for example. The program should print the tidal data, the sea-level rise and
+for example to calculate the stats for Whitby. The program should print the tidal data, the sea-level rise and
 the longest contiguous period of data (i.e. without any missing data) from 
 the data loaded. 
 
@@ -93,6 +93,22 @@ it easier to work out the rise per day and multiply by 365 to get metres per yea
 
 `uptide` can calculate the tidal constuents, but any `nan` (i.e missing data) must be 
 removed prior to working out tidal constiuents. 
+
+To search for files of a certain type within a directory, use the ``glob`` module. 
+
+Regular experssions might be useful for removing the dodgy values (`N`, `M`, `T`), so
+something like:
+
+```python
+my_data.replace(to_replace=".*M$",value={'A':np.nan},regex=True,inplace=True)
+```
+will replace any value ending in M in the column `A` in the pandas dataframe `my_data`. 
+Note I've done this `inplace` so I don't need to reassign into another variable.
+
+To convert datetimes to numbers to do a linear regression (see above), there are a few ways, 
+but using the [`date2num`](https://matplotlib.org/stable/api/dates_api.html#matplotlib.dates.date2num)
+function in `matplotlib.dates`, which converts a datetime
+to the number of days since 01-01-1970. 
 
 
 ## The rules

@@ -9,6 +9,8 @@ from dataclasses import asdict
 import pandas as pd
 import pytz
 import datetime
+import numpy as np
+
 
 class TestTidalAnalysis():
     
@@ -26,9 +28,8 @@ class TestTidalAnalysis():
 
         # check for M, N and T data; should be NaN
         assert data['Sea Level'].isnull().any()
-        floats = data.apply(pd.to_numeric, errors="ignore").map(lambda x: isinstance(x, float)).all()
-        assert floats['Sea Level']
-
+        assert pd.api.types.is_float_dtype(data['Sea Level'])
+        
         # check for error on unknown file
         with pytest.raises(FileNotFoundError):
             read_tidal_data("missing_file.dat")
