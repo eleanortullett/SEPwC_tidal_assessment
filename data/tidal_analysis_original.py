@@ -2,15 +2,26 @@
 
 # import the modules you need here
 import argparse
+import pandas as pd
+
 
 def read_tidal_data(filename):
+  
+  
 
-    return 0
-    
-def extract_single_year_remove_mean(year, data):
+def test_reading_data():
    
+   
+def extract_single_year_remove_mean(year, data):
+ 
 
-    return 
+def join_data(data1, data2):
+  
+
+def test_join_data():
+ 
+
+    
 
 
 def extract_section_remove_mean(start, end, data):
@@ -45,7 +56,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
                      prog="UK Tidal analysis",
                      description="Calculate tidal constiuents and RSL from tide gauge data",
-                     epilog="Copyright 2024, Jon Hill"
+                     epilog="Copyright 2024, Eleanor Tullett"
                      )
 
     parser.add_argument("directory",
