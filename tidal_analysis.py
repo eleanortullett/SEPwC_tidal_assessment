@@ -179,7 +179,7 @@ def sea_level_rise(data):
     calculates the slope and p_value from the supplied data frame
 
     Args:
-        data frame to calulae the rise from.
+        data frame to calulate the rise from.
 
     Returns:
         slope and p_value from the data frame
@@ -197,25 +197,43 @@ def sea_level_rise(data):
     # Return the slope and p-value
     return slope, p_value
 
-
 def tidal_analysis(data, constituents, start_datetime):
     """
-    No idea what this is supposed to do yet
-    Code based SEPwC documentation
-    """
-    tide = uptide.Tides([constituents[0]])
-    tide.set_initial_time(start_datetime)
-    seconds_since = (data.index.astype("int64").to_numpy() / 1e9) - start_datetime.timestamp()
-    amp, pha = uptide.harmonic_analysis(
-        tide, data[columnNames[3]].to_numpy() / 1000, seconds_since
-    )
+    Performs harmonic analysis on tidal data.
+    
+    Args:
+        data: DataFrame containing the tidal data.
+        constituents: List of tidal constituents.
+        start_datetime: Start date and time for the analysis.
 
-    tide = uptide.Tides([constituents[1]])
+    Returns:
+        amp: Amplitude of tidal constituents.
+        pha: Phase of tidal constituents.
+        
+    Code based on SEPwC documentation
+    """
+    # Ensure start_datetime is timezone naive
+    if start_datetime.tzinfo is not None:
+        start_datetime = start_datetime.replace(tzinfo=None)
+
+    # Create a tide object containing a list of the constituents
+    tide = uptide.Tides(constituents)
     tide.set_initial_time(start_datetime)
-    seconds_since = (data.index.astype("int64").to_numpy() / 1e9) - start_datetime.timestamp()
-    amp, pha = uptide.harmonic_analysis(
-        tide, data[columnNames[3]].to_numpy() / 1000, seconds_since
-    )
+    # Make the data index timezone naive
+    data.index = data.index.tz_localize(None)
+    # Calculate the number of seconds since start time
+    seconds_since = (data.index - start_datetime).total_seconds()
+    # Convert sea level to a numpy array
+    sl = data[columnNames[3]].values
+
+    # Filter out NaN values
+    is_a_number = pd.notna(sl)
+    sl = sl[is_a_number]
+    seconds_since = seconds_since[is_a_number]
+
+    # Perform harmonic analysis
+    amp, pha = uptide.harmonic_analysis(tide, sl, seconds_since)
+
     return amp, pha
 
 
