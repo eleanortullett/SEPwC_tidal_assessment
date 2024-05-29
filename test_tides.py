@@ -16,7 +16,7 @@ class TestTidalAnalysis():
     
     def test_reading_data(self):
         print("a")
-        tidal_file = "1947ABE.txt"
+        tidal_file = "data/1947ABE.txt"
         data = read_tidal_data(tidal_file)
        
 
@@ -37,7 +37,7 @@ class TestTidalAnalysis():
     
     def test_join_data(self):
 
-        gauge_files = ['1946ABE.txt', '1947ABE.txt']
+        gauge_files = ['data/1946ABE.txt', 'data/1947ABE.txt']
 
         data1 = read_tidal_data(gauge_files[1])
         data2 = read_tidal_data(gauge_files[0])
@@ -58,7 +58,7 @@ class TestTidalAnalysis():
 
     def test_extract_year(self):
         
-        gauge_files = ['1946ABE.txt', '1947ABE.txt']
+        gauge_files = ['data/1946ABE.txt', 'data/1947ABE.txt']
 
         data1 = read_tidal_data(gauge_files[1])
         data2 = read_tidal_data(gauge_files[0])
@@ -77,7 +77,7 @@ class TestTidalAnalysis():
 
     def test_extract_section(self):
 
-        gauge_files = ['1946ABE.txt', '1947ABE.txt']
+        gauge_files = ['data/1946ABE.txt', 'data/1947ABE.txt']
 
         data1 = read_tidal_data(gauge_files[1])
         data2 = read_tidal_data(gauge_files[0])
@@ -105,7 +105,7 @@ class TestTidalAnalysis():
 
     def test_correct_tides(self):
 
-        gauge_files = ['1946ABE.txt', '1947ABE.txt']
+        gauge_files = ['data/1946ABE.txt', 'data/1947ABE.txt']
         data1 = read_tidal_data(gauge_files[1])
         data2 = read_tidal_data(gauge_files[0])
         data = join_data(data1, data2)
@@ -124,7 +124,7 @@ class TestTidalAnalysis():
 
     def test_linear_regression(self):
 
-        gauge_files = ['1946ABE.txt', '1947ABE.txt']
+        gauge_files = ['data/1946ABE.txt', 'data/1947ABE.txt']
         data1 = read_tidal_data(gauge_files[1])
         data2 = read_tidal_data(gauge_files[0])
         data = join_data(data1, data2)
